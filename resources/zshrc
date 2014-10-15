@@ -1,0 +1,174 @@
+# Path to your oh-my-zsh configuration.
+ZSH=/usr/share/oh-my-zsh/
+
+# Set name of the theme to load.
+# Look in ~/.oh-my-zsh/themes/
+# Optionally, if you set this to "random", it'll load a random theme each
+# time that oh-my-zsh is loaded.
+ZSH_THEME="juanghurtado"
+
+# Set to this to use case-sensitive completion
+# CASE_SENSITIVE="true"
+
+# Comment this out to disable bi-weekly auto-update checks
+DISABLE_AUTO_UPDATE="true"
+
+# Uncomment to change how often before auto-updates occur? (in days)
+# export UPDATE_ZSH_DAYS=13
+
+# Uncomment following line if you want to disable colors in ls
+# DISABLE_LS_COLORS="true"
+
+# Uncomment following line if you want to disable autosetting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment following line if you want to disable command autocorrection
+# DISABLE_CORRECTION="true"
+
+# Uncomment following line if you want red dots to be displayed while waiting for completion
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment following line if you want to disable marking untracked files under
+# VCS as dirty. This makes repository status check for large repositories much,
+# much faster.
+DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+plugins=(git svn)
+
+source $ZSH/oh-my-zsh.sh
+
+# Customize to your needs...
+
+## Exports --------------------------------------------------------------------------------
+export EDITOR="vim"
+
+export SHARK_ROOT=/home/ks/builds/shark
+export PYTHONPATH=$ROOTSYS/lib:$PYTHONPATH:"/home/ks/documents/master/git/scripts":"/home/ks/documents/python":"/home/ks/documents/opgaver/sml/git":"/home/ks/documents/phd/projects/skyml/git/src"
+
+# Set cache dir for ccache. Using /tmp will use the RAM, which will provide additional boost.
+export CCACHE_DIR=/tmp/ccache
+
+# Update $PATH for Anglican
+export PATH=$PATH:"/home/ks/builds/anglican"
+
+# Configuration for pacmatic
+export pacman_program="powerpill"
+
+
+## Aliases --------------------------------------------------------------------------------
+alias phd="cd ~/documents/phd/"
+alias skyml="cd ~/documents/phd/projects/skyml/"
+alias revytex="cd ~/documents/projects/FysikRevyTeX/"
+alias pycoon="cd ~/documents/projects/pycoon/"
+
+## Zsh-Completion -----------------------------------------------------------------------
+zstyle ':completion:*' use-cache 'yes'
+zstyle ':completion:*' cache-path ~/.cache/zsh/
+zstyle ':completion:*' expand 'yes'
+#zstyle ':completion:*:descriptions' format '%U%B%d%b%u'
+zstyle ':completion:*:warnings' format '%BSorry, no matches for: %d%b'
+zstyle ':completion:*:options' description 'yes'
+zstyle ':completion:*:options' auto-description '%d'
+zstyle ':completion:*' menu select=12
+
+# Correct in completion (this will probably make me a sloppy typist!!)
+zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*:match:*' original only
+zstyle ':completion:*:approximate:*' max-errors 1 numeric
+zstyle ':completion:*' special-dirs true    # expand 'cd ..<TAB>' to 'cd ../'
+
+# Completing process IDs with menu selection:
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:kill:*' force-list always
+
+# Ignore special patterns for vim and scribes
+zstyle ':completion:*:*vim:*' ignored-patterns '*?.pdf' '*?.ps' '*?.toc' '*?.aux' '*?.png'\
+                                               '?*.jpg' '?*.out' '?*.bbl' '?*.blg' '?*.lof'\
+                                               '?*.lot' '?*.latexmain' '?*_latexmk' '?*.pyc'
+
+# --- Dirstack ---
+# List previously visited directories with 'dirs -v' and then 'cd -<NUM>':
+DIRSTACKFILE="$HOME/.cache/zsh/dirs"
+if [[ -f $DIRSTACKFILE ]] && [[ $#dirstack -eq 0 ]]; then
+  dirstack=( ${(f)"$(< $DIRSTACKFILE)"} )
+  [[ -d $dirstack[1] ]] && cd $dirstack[1]
+fi
+chpwd() {
+  print -l $PWD ${(u)dirstack} >$DIRSTACKFILE
+}
+
+DIRSTACKSIZE=20
+
+setopt autopushd pushdsilent pushdtohome
+
+## Remove duplicate entries
+setopt pushdignoredups
+
+## This reverts the +/- operators.
+setopt pushdminus
+
+# --- End Dirstack ---
+
+
+## Styling --------------------------------------------------------------------------------
+
+vcs_info_wrapper() {
+  if [ -n "$vcs_info_msg_0_" ]; then
+echo "${vcs_info_msg_0_}"
+  fi
+}
+
+# Show new dir if changed
+# Also, update vcs_info
+chpwd() {
+  echo -n -e " \033[1;32m>\033[0m "; echo $PWD
+}
+
+# The following commands store the elapsed time of the previous executed command:
+preexec () {
+   (( $#_elapsed > 1000 )) && set -A _elapsed $_elapsed[-1000,-1]
+   typeset -ig _start=SECONDS
+}
+precmd () {
+   (( _start >= 0 )) && set -A _elapsed $_elapsed $(( SECONDS-_start ))
+   _start=-1
+}
+
+## Prompt options---------------------------------------------------------------------
+
+# Set the propmt according to userpriv
+autoload -U promptinit
+promptinit
+setopt prompt_subst
+
+NORM="%{"$'\033[00m'"%}"
+
+if [[ ${EUID} == 0 ]] ; then
+    #PROMPT='\[\033[38;05;214m\][\#] \[\033[01;31m\]\u@\h\[\033[01;34m\] \W \$\[\033[00m\] '
+    PROMPT="%{$fg[yellow]%}[%?] %{$fg_bold[red]%}%n@%m %{$fg_bold[blue]%}%3~ %#%{$reset_color%} "
+    RPROMPT='$(vcs_info_wrapper)%{${fg[yellow]}%}[%{${fg[white]}%}%*%{${fg[yellow]}%}]${NORM}'
+else
+    #PROMPT='\[\033[38;05;214m\][\#] \[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] '
+    #PROMPT="%{$fg[yellow]%}[%?] %{$fg_bold[green]%}%n@%m %{$fg_bold[blue]%}%3~ %#%{$reset_color%} "
+    PROMPT='%{$fg[yellow]%}[$_elapsed[-1]] %{$fg_bold[green]%}%n@%m %{$fg_bold[blue]%}%3~ %#%{$reset_color%} '
+    #RPROMPT='$(vcs_info_wrapper)%{${fg[yellow]}%}[%{${fg[white]}%}%*%{${fg[yellow]}%}]${NORM}'
+    RPROMPT='$(vcs_info_wrapper)%{${fg[yellow]}%}[%{${fg[white]}%}%*%{${fg[yellow]}%}]${NORM}'
+fi
+
+# Spelling/correction prompt
+SPROMPT="%{${fg[yellow]}%}zsh: correct '%R' to '%r'? ${NORM}(%UY%ues/%UN%uo/%UE%udit/%UA%ubort)"
+
+
+
+# Base16 Shell
+BASE16_SCHEME="railscasts"
+BASE16_SHELL="$HOME/.config/base16-shell/base16-$BASE16_SCHEME.dark.sh"
+[[ -s $BASE16_SHELL ]] && . $BASE16_SHELL
+
+
+## Functions---------------------------------------------------------------------
+# Very nice way of inspecting CSV files:
+csvlook() { column -s, -t < "$1" | less -#2 -N -S; }
