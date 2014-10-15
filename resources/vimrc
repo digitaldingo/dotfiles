@@ -1,0 +1,689 @@
+" NeoBundle Scripts-----------------------------
+
+if has('vim_starting')
+  set nocompatible               " Be iMproved
+
+  " Required:
+  set runtimepath+=/home/ks/dotfiles/resources/vim/bundle/neobundle.vim/
+endif
+
+" Required:
+call neobundle#begin(expand('/home/ks/dotfiles/resources/vim/bundle'))
+
+" Let NeoBundle manage NeoBundle
+" Required:
+NeoBundleFetch "Shougo/neobundle.vim"
+
+" Bundles with no configuration:
+"NeoBundle "scrooloose/syntastic"
+NeoBundle "sheerun/vim-polyglot"           " Lots of languages!
+NeoBundle "bling/vim-airline"               " lean & mean status/tabline
+NeoBundle "dockyard/vim-easydir"
+"NeoBundle "editorconfig/editorconfig-vim"
+NeoBundle "kshenoy/vim-signature"
+NeoBundle "scrooloose/nerdtree"
+NeoBundle "tpope/vim-fugitive"              " Git addon
+"NeoBundle "tpope/vim-sensible"
+NeoBundle "mattn/emmet-vim"                 " High-speed HTML and CSS editing
+
+" Python
+"NeoBundle "hdima/python-syntax"             " Better Python syntax highlighting
+NeoBundle "nvie/vim-flake8"
+NeoBundle "davidhalter/jedi-vim"
+NeoBundle "klen/python-mode"                " Python mode
+
+" Syntax
+"NeoBundle "Shougo/neocomplcache"            " Autocomplete
+"NeoBundle "Shougo/neocomplete"              " Autocomplete
+NeoBundle "Shougo/neosnippet-snippets"
+NeoBundle "Shougo/neosnippet.vim"
+NeoBundle "honza/vim-snippets"
+NeoBundle "jtratner/vim-flavored-markdown"
+NeoBundle "LaTeX-Box-Team/LaTeX-Box"
+NeoBundle "SirVer/ultisnips"
+NeoBundle "othree/html5.vim"
+"NeoBundle "Valloric/YouCompleteMe"          " Auto completion
+NeoBundle "xolox/vim-easytags"              " Highlight variables using Exuberant Ctags
+NeoBundle "xolox/vim-misc"                  " Required by vim-easytags
+
+" Colour
+"NeoBundle "vim-scripts/CSApprox"            " Make console versions of GUI colorschemes
+NeoBundle "flazz/vim-colorschemes"
+NeoBundle "cocopon/iceberg.vim"             " Colour scheme
+NeoBundle "chriskempson/base16-vim"         " Colour scheme
+NeoBundle "noahfrederick/vim-hemisu"        " Colour scheme
+
+" General enhancements
+"NeoBundle "justinmk/vim-sneak"              " Motion on steroids
+
+
+" You can specify revision/branch/tag.
+"NeoBundle 'Shougo/vimshell', { 'rev' : '3787e5' }
+
+" Required:
+call neobundle#end()
+
+" Required:
+filetype plugin indent on
+
+" If there are uninstalled bundles found on startup,
+" this will conveniently prompt you to install them.
+NeoBundleCheck
+
+
+" ==================== Bundle configuration ====================
+
+" == Airline
+"let g:airline_theme="jellybeans"
+let g:airline_theme="wombat"
+"let g:airline_left_sep = ""
+"let g:airline_right_sep = ""
+"let g:airline_section_b = ""
+"let g:airline_section_x = ""
+"let g:airline_section_y = ""
+
+" == Base16
+let base16colorspace=256  " Access colors present in 256 colorspace
+
+" == Easytags
+let g:easytags_update_time = 4000     " Update every 4 sec.
+let g:easytags_updatetime_warn = 0    " Silence the annoying warning
+
+
+" == Python syntax
+let g:python_highlight_all = 1
+
+" == Pyflakes
+let g:flake8_ignore="E231,E303"
+
+" == Python mode
+let g:pymode_lint_on_write = 0
+
+
+" == Syntastic
+" let g:syntastic_check_on_open = 0
+" let g:syntastic_check_on_wq = 0
+" let g:syntastic_enable_signs = 1
+" let g:syntastic_auto_loc_list = 2
+" let g:syntastic_cpp_check_header = 1
+" let g:syntastic_cpp_no_include_search = 0
+" let g:syntastic_python_checkers = ['pylint']
+" let g:syntastic_python_checker_args='--ignore=E231,E303'
+" let g:syntastic_javascript_checkers = ["jshint"]
+" "let g:syntastic_javascript_jshint_conf = "$HOME/.jshintrc"
+" "let g:syntastic_html_jshint_conf = "$HOME/.jshintrc"
+" let g:syntastic_cpp_compiler = "g++"
+" " let g:syntastic_cpp_compiler_options = " -std=c++11"
+" let g:syntastic_java_checkers = []
+" let g:syntastic_error_symbol = '✗'
+" let g:syntastic_warning_symbol = '⚠'
+" let g:syntastic_mode_map = { 'mode': 'passive'}
+
+"if has("unix")
+"  let g:syntastic_error_symbol = "█"
+"  let g:syntastic_style_error_symbol = ">"
+"  let g:syntastic_warning_symbol = "█"
+"  let g:syntastic_style_warning_symbol = ">"
+"else
+"  let g:syntastic_error_symbol = "X"
+"  let g:syntastic_style_error_symbol = ">"
+"  let g:syntastic_warning_symbol = "!"
+"  let g:syntastic_style_warning_symbol = ">"
+"endif
+
+" == Neocomplcache
+" let g:acp_enableAtStartup = 0
+" let g:neocomplcache_enable_at_startup = 1
+" let g:neocomplcache_enable_smart_case = 1
+" let g:neocomplcache_min_syntax_length = 2
+" let g:neocomplcache_enable_auto_select = 1
+" let g:neocomplcache_max_list = 12
+" let g:neocomplcache_enable_camel_case_completion = 1
+" let g:neocomplcache_enable_underbar_completion = 1
+
+
+"" == Neocomplete
+"" Disable AutoComplPop.
+"let g:acp_enableAtStartup = 0
+"" Use neocomplete.
+"let g:neocomplete#enable_at_startup = 1
+"" Use smartcase.
+"let g:neocomplete#enable_smart_case = 1
+"" Set minimum syntax keyword length.
+"let g:neocomplete#sources#syntax#min_keyword_length = 2
+"let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+"
+"let g:neocomplcache_max_list = 12
+"
+"" Allow moving using cursor keys.
+"let g:neocomplete#enable_insert_char_pre = 1
+"
+"" Define dictionary.
+"let g:neocomplete#sources#dictionary#dictionaries = {
+"    \ 'default' : '',
+"    \ 'vimshell' : $HOME.'/.vimshell_hist',
+"    \ 'scheme' : $HOME.'/.gosh_completions'
+"        \ }
+"
+"" Define keyword.
+"if !exists('g:neocomplete#keyword_patterns')
+"    let g:neocomplete#keyword_patterns = {}
+"endif
+"let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+"
+"" " Plugin key-mappings.
+"" inoremap <expr><C-g>     neocomplete#undo_completion()
+"" inoremap <expr><C-l>     neocomplete#complete_common_string()
+"" inoremap <expr><Tab>  neocomplete#start_manual_complete()
+""
+"" " Recommended key-mappings.
+"" " <CR>: close popup and save indent.
+"" inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+"" function! s:my_cr_function()
+""   return neocomplete#close_popup() . "\<CR>"
+""   " For no inserting <CR> key.
+""   "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+"" endfunction
+"" " <TAB>: completion.
+"" "inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+"" " <C-h>, <BS>: close popup and delete backword char.
+"" inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+"" inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+"" inoremap <expr><C-y>  neocomplete#close_popup()
+"" inoremap <expr><C-e>  neocomplete#cancel_popup()
+"" " Close popup by <Space>.
+"" "inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
+"
+"" Key bindings
+"inoremap <expr><CR> pumvisible() ? neocomplete#close_popup() : "\<CR>"
+"inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+"inoremap <expr><BS> pumvisible() ? neocomplete#smart_close_popup()."\<C-h>" : "\<BS>"
+"inoremap <expr><C-y> neocomplete#close_popup()
+"inoremap <expr><C-c> neocomplete#cancel_popup()
+"
+"" For smart TAB completion.
+"" inoremap <expr><TAB> pumvisible() ? "\<C-n>" :
+"" \ <SID>check_back_space() ? "\<TAB>" :
+"" \ neocomplete#start_manual_complete()
+"" function! s:check_back_space() "{{{
+"" let col = col('.') - 1
+"" return !col || getline('.')[col - 1] =~ '\s'
+"" endfunction"}}}
+"
+"" For cursor moving in insert mode(Not recommended)
+""inoremap <expr><Left>  neocomplete#close_popup() . "\<Left>"
+""inoremap <expr><Right> neocomplete#close_popup() . "\<Right>"
+""inoremap <expr><Up>    neocomplete#close_popup() . "\<Up>"
+""inoremap <expr><Down>  neocomplete#close_popup() . "\<Down>"
+"" Or set this.
+""let g:neocomplete#enable_cursor_hold_i = 1
+"" Or set this.
+""let g:neocomplete#enable_insert_char_pre = 1
+"
+"" AutoComplPop like behavior.
+""let g:neocomplete#enable_auto_select = 1
+"
+"" Shell like behavior(not recommended).
+""set completeopt+=longest
+""let g:neocomplete#enable_auto_select = 1
+""let g:neocomplete#disable_auto_complete = 1
+""inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" Enable heavy omni completion.
+"if !exists('g:neocomplete#sources#omni#input_patterns')
+"  let g:neocomplete#sources#omni#input_patterns = {}
+"endif
+"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+" For perlomni.vim setting.
+" https://github.com/c9s/perlomni.vim
+"let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+
+
+" == Neosnippet
+" Enable snipMate compatibility feature.
+let g:neosnippet#enable_snipmate_compatibility = 1
+
+" Tell Neosnippet about the other snippets
+"let g:neosnippet#snippets_directory=['~/.vim/bundle/vim-snippets/snippets', '~/.vim/bundle/neosnippet-snippets/neosnippets', '~/.vim/personal/snippets']
+"let g:neosnippet#snippets_directory=['~/.vim/bundle/neosnippet-snippets/neosnippets', '~/.vim/personal/snippets']
+let g:neosnippet#snippets_directory='~/.vim/bundle/neosnippet-snippets/neosnippets'
+
+
+
+
+" == python-mode
+let g:pymode_syntax = 1
+""let g:pymode_syntax_slow_sync = 1
+"let g:pymode_syntax_all = 1
+"let g:pymode_syntax_highlight_self = 1
+let g:pymode_folding = 0
+
+
+" == Ultisnips
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+" let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsJumpForwardTrigger="<c-b>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"
+" " If you want :UltiSnipsEdit to split your window.
+" let g:UltiSnipsEditSplit="vertical"
+
+
+" == jedi-vim
+" Me likes buffers:
+" let g:jedi#use_tabs_not_buffers = 0
+" let g:jedi#completions_command = "<C-N>"
+
+
+" == YouCompleteMe
+"let g:ycm_complete_in_comments_and_strings=1
+"let g:ycm_key_list_select_completion=['<C-n>', '<Down>']
+"let g:ycm_key_list_previous_completion=['<C-p>', '<Up>']
+"let g:ycm_filetype_blacklist={'unite': 1}
+
+
+
+" End NeoBundle Scripts-------------------------
+
+
+" -- Reasonable defaults
+if has('syntax') && !exists('g:syntax_on')
+    syntax enable
+endif
+
+" Reload file on change
+set autoread
+
+if has("vms")
+    set nobackup		" do not keep a backup file, use versions instead
+else
+    set backup		" keep a backup file
+endif
+
+set autoindent
+set backspace=indent,eol,start
+set complete-=i
+set smarttab
+
+set nrformats-=octal
+
+set ttimeout
+set ttimeoutlen=100
+
+set incsearch
+" Use <C-L> to clear the highlighting of :set hlsearch.
+if maparg('<C-L>', 'n') ==# ''
+    nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
+endif
+
+" Always show the status line
+set laststatus=2
+
+set ruler
+set showcmd
+set wildmenu
+
+set wildignore+=*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem
+set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
+set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/*
+set wildignore+=*.swp,*~,._*
+if has("cryptmethod")
+  set cryptmethod=blowfish
+endif
+set ttymouse=xterm2
+set mouse=a
+
+
+if &encoding ==# 'latin1' "&& has('gui_running')
+    set encoding=utf-8
+endif
+"if &listchars ==# 'eol:$'
+"    set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+"endif
+
+if has('path_extra')
+    setglobal tags-=./tags tags^=./tags;
+endif
+
+
+" Search
+"set ignorecase
+set smartcase
+set hlsearch
+set gdefault
+
+
+" Git commit messages with spelling and automatic insert mode
+if has("spell")
+  au BufNewFile,BufRead COMMIT_EDITMSG setlocal spell
+endif
+"au BufNewFile,BufRead COMMIT_EDITMSG call feedkeys("ggi", "t")
+
+
+" Allow moving away from a buffer without saving it:
+set hidden
+
+" Tabs
+set softtabstop=4
+set shiftwidth=4
+set tabstop=4
+set expandtab		" Use spaces instead of tabs
+
+
+" Make working directory the same as the currently open buffer
+autocmd BufEnter * lcd %:p:h
+
+
+" Set min and max height for quickfix window:
+au FileType qf call AdjustWindowHeight(3, 10)
+function! AdjustWindowHeight(minheight, maxheight)
+  exe max([min([line("$")+1, a:maxheight]), a:minheight]) . "wincmd _"
+endfunction
+
+
+" Strip all trailing white spaces on save:
+autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
+function! <SID>StripTrailingWhitespaces()
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    call cursor(l, c)
+endfun
+
+" Restore the cursor position when opening a previously edited file:
+augroup resCur
+  autocmd!
+  autocmd BufReadPost * call setpos(".", getpos("'\""))
+augroup END
+
+
+" ============================== Display stuff ==============================
+
+" Allow color schemes to do bright colors without forcing bold.
+"if &t_Co == 8 && $TERM !~# '^linux'
+"    set t_Co=16
+"endif
+
+set number
+set title
+set noerrorbells
+set t_Co=256
+if has("syntax")
+    syntax on
+    set synmaxcol=1000
+
+    if has('gui_running')
+        autocmd FileType,BufEnter *
+            \ if &ft=='' |
+            \   colorscheme colorzone |
+            \   let g:airline_theme="solarized" |
+            \ elseif &ft=='tex' || &ft=='mkd' || &ft=='text' || &ft=='bib' |
+            \   set background=light |
+            \   colorscheme base16-railscasts |
+            \   let g:airline_theme="solarized" |
+            \ else |
+            \   set background=dark |
+            \   colorscheme base16-tomorrow |
+            \   let g:airline_theme="wombat" |
+            \ endif
+    else
+        autocmd FileType,BufEnter *
+            \ if &ft=='' |
+            \   colorscheme Tomorrow |
+            \ elseif &ft=='tex' || &ft=='mkd' || &ft=='text' || &ft=='bib' |
+            \   colorscheme Tomorrow |
+            \ else |
+            \   colorscheme Monokai |
+            \ endif
+    endif
+
+endif
+set nolist
+"set listchars=tab:▸\ ,eol:¬,trail:·,nbsp:·
+
+" splits
+set splitbelow
+set splitright
+
+
+
+
+" ============================== Key mappings ==============================
+
+
+" better vertical movement
+vmap j gj
+vmap k gk
+nmap j gj
+nmap k gk
+
+" Make cursor keys ignore wrapping
+"nnoremap <Up> gk
+"inoremap <Up> <C-O>gk
+"nnoremap <Down> gj
+"inoremap <Down> <C-O>gj
+"nnoremap <Home> g0
+"inoremap <Home> <C-O>g0
+"nnoremap <End> g$
+"inoremap <End> <C-O>g$
+
+" nmap <Up> gk
+" imap <Up> <C-O>gk
+" vmap <Up> gk
+" nmap <Down> gj
+" imap <Down> <C-O>gj
+" vmap <Down> gj
+" nmap <Home> g0
+" imap <Home> <C-O>g0
+" vmap <Home> g0
+" nmap <End> g$
+" imap <End> <C-O>g$
+" vmap <End> g$
+
+" Ignore the annoying movement of shift+{up,down}
+nmap <S-Up> gk
+imap <S-Up> <C-O>gk
+vmap <S-Up> gk
+nmap <S-Down> gj
+imap <S-Down> <C-O>gj
+vmap <S-Down> gj
+
+
+
+" Make it easy to find TODO, FIXME, TODO: etc. in files:
+noremap <F2> :noautocmd lvimgrep /\<\(TODO\\|FIXME\)\>/gj *<C-R>=(expand("%:e")=="" ? "" : ".".expand("%:e"))<CR> <Bar> lw <CR>
+
+
+" Indent and unindent in both visual and select mode while maintaining the
+" selection.
+vmap <Tab> >gv
+vmap <S-Tab> <gv
+
+
+" Shortcut to make
+nmap <F10> :make<CR>
+
+
+" Maps to turn spell checking on/off
+map <F6> :setlocal spell! spelllang=en_gb<CR>
+map <S-F6> :setlocal spell! spelllang=da<CR>
+
+" Normally Ctrl-u and Ctrl-w will delete text, and you cannot undo this
+" with u! These mappings will first break the undo block, then use Ctrl-u/w so
+" and you'll be able to undo using u.
+inoremap <c-u> <c-g>u<c-u>
+inoremap <c-w> <c-g>u<c-w>
+
+" == Neosnippet
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+"" SuperTab like snippets behavior.
+"imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+"\ "\<Plug>(neosnippet_expand_or_jump)"
+"\: pumvisible() ? "\<C-n>" : "\<TAB>"
+"smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+"\ "\<Plug>(neosnippet_expand_or_jump)"
+"\: "\<TAB>"
+
+"" For snippet_complete marker.
+"if has('conceal')
+"  set conceallevel=2 concealcursor=i
+"endif
+
+" == end Neosnippet
+
+" == Ultisnips
+" let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsJumpForwardTrigger="<tab>"
+" let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+"let g:UltiSnipsExpandTrigger="<C-CR>"
+"let g:UltiSnipsJumpForwardTrigger="<C-tab>"
+"let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
+
+" == end Ultisnips
+
+"nnoremap <leader>l :call LightThemeToggle()<CR>
+nnoremap <F12> :call LightThemeToggle()<CR>
+
+let g:theme_is_light = 0
+function! LightThemeToggle()
+    if g:theme_is_light
+        set background=dark
+        "let g:airline_theme = "wombat"
+        AirlineTheme wombat
+        let g:theme_is_light = 0
+        autocmd BufEnter * |
+                    \ if &background=="light" |
+                    \   set background=dark |
+                    \ endif |
+                    \ if g:airline_theme != "wombat" |
+                    \   let g:airline_theme = "wombat" |
+                    \ endif
+                    "\ AirlineTheme wombat
+    else
+        set background=light
+        "let g:airline_theme = "base16"
+        AirlineTheme base16
+        let g:theme_is_light = 1
+        autocmd BufEnter * |
+                    \ if &background=="dark" |
+                    \    set background=light |
+                    \ endif |
+                    \ if g:airline_theme != "base16" |
+                    \    let g:airline_theme = "base16" |
+                    \ endif
+                    "\ AirlineTheme base16
+    endif
+"    AirlineRefresh
+endfunction
+
+
+" ============================== File type config ==============================
+
+" Markdown configurations
+autocmd BufRead,BufNewFile *.md,*.mkd exec 'set filetype=mkd'
+
+" HTML configurations
+autocmd FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2 noexpandtab
+autocmd FileType htmldjango setlocal shiftwidth=2 tabstop=2 softtabstop=2 noexpandtab
+
+" Python configurations
+autocmd FileType python setlocal shiftwidth=4 expandtab tabstop=4 softtabstop=4
+autocmd FileType python setlocal colorcolumn=80
+autocmd FileType python map <buffer> <F4> :call Flake8()<CR>
+"autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType python setlocal omnifunc=jedi#completions
+let g:jedi#completions_enabled = 0
+let g:jedi#auto_vim_configuration = 0
+" if !exists('g:neocomplete#force_omni_input_patterns')
+"   let g:neocomplete#force_omni_input_patterns = {}
+" endif
+" let g:neocomplete#force_omni_input_patterns.python =
+"         \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+
+
+
+" TeX
+"autocmd FileType tex NeoCompleteLock
+
+
+" ============================== Misc ==============================
+
+" Persistent undo is like a local version control system that you don't have to
+" manage. Could be a useful feature.
+set undodir=/home/ks/dotfiles/resources/vim/undodir
+set undofile
+set undolevels=1000 "maximum number of set changes that can be undone
+set undoreload=10000 "maximum number lines to save for undo on a buffer reload
+
+
+" Highlight VCS conflict markers
+match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+
+" Set file encoding:
+set fileencodings=utf-8,latin1
+
+" Don't open the scratch windows showing documentation when using
+" omnicompletion.
+set completeopt-=preview
+
+" better wrapping
+"set wrap linebreak
+"set showbreak=" "
+"set wrap
+"set linebreak
+"set nolist  " list disables linebreak
+"set textwidth=0
+"set wrapmargin=0
+"set formatoptions+=l
+
+set wrap linebreak nolist
+set virtualedit=
+set display+=lastline
+"noremap  <buffer> <silent> <Up>   gk
+"noremap  <buffer> <silent> <Down> gj
+"noremap  <buffer> <silent> <Home> g<Home>
+"noremap  <buffer> <silent> <End>  g<End>
+"inoremap <buffer> <silent> <Up>   <C-o>gk
+"inoremap <buffer> <silent> <Down> <C-o>gj
+"inoremap <buffer> <silent> <Home> <C-o>g<Home>
+"inoremap <buffer> <silent> <End>  <C-o>g<End>
+nnoremap j gj
+nnoremap k gk
+nnoremap 0 g0
+nnoremap $ g$
+
+set textwidth=80
+"set foldmethod=manual
+
+" Set foldmethod to expr as the file is read to allow for automatic folding,
+" then change it to manual folding.
+augroup vimrc
+  au BufReadPre * setlocal foldmethod=expr
+  au BufWinEnter * if &fdm == 'expr' | setlocal foldmethod=manual | endif
+augroup END
+
+
+" Word wrapping at the end of screen. Make sure these are the last lines in .vimrc!
+"set formatoptions=l
+"set lbr
+
+"" ~/.vimrc_local if you have it
+"if filereadable(expand("~/.vimrc_local"))
+"  source ~/.vimrc_local
+"endif
+

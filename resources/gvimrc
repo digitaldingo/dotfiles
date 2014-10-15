@@ -1,0 +1,9 @@
+set guifont=DejaVu\ Sans\ Mono\ 9
+set antialias
+set guioptions-=T "remove toolbar
+set guioptions-=m "remove menu bar
+set guioptions-=r
+set guioptions-=L
+"highlight Cursor guifg=black guibg=grey
+"set guicursor=n-c-v:block-Cursor-blinkon0
+"set guicursor+=i:ver10-Cursor
